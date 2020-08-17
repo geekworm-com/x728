@@ -1,7 +1,8 @@
 #X728 RTC setting up
 sudo sed -i '$ i rtc-ds1307' /etc/modules
 sudo sed -i '$ i echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device' /etc/rc.local
-sudo sed -i '$ i  hwclock -s' /etc/rc.local  
+sudo sed -i '$ i hwclock -s' /etc/rc.local
+sudo sed -i '$ i #Start power management on boot' /etc/rc.local
 
 #x728 Powering on /reboot /full shutdown through hardware
 #!/bin/bash
