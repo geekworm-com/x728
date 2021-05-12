@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # 12th May. 2021 by Harry;
 # IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!
-# 1. This is low voltage automatic shutdown script only to the X728 series (V1.1, V1.3, V1.5 version, BUT DON'T support future V2.0 version), and it will help you to implement the solfware automatic shutdown function when the battery is low voltage.
+# 1. This is low voltage automatic shutdown script only to the X728 series (V1.1, V1.3, V1.5 version, BUT DON'T support future V2.0 version), and it will help you to implement the software automatic shutdown function when the battery is low voltage.
 # 2. Once this script is installed. Please charge your batteries when battery low. otherwsie, Your Raspberry Pi cannot boot up again.
 # 3. If you have some questions, please contact to: support@geekworm.com
 import struct
