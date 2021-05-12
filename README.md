@@ -1,6 +1,7 @@
 This shell script and python file is tested only on Raspberry pi OS..
 ## x728.sh
 setup scripts for x728
+
 Guide: https://wiki.geekworm.com/X728-Software
 
 ## x728bat_v1.3.py
