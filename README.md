@@ -1,3 +1,4 @@
+This shell script and python file is tested only on Raspberry pi OS..
 ## x728.sh
 setup scripts for x728
 
