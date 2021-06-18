@@ -1,10 +1,10 @@
 This shell script and python file is tested only on Raspberry pi OS..
-## x728-v1.0
+## x728-v1.0.sh
 setup scripts for x728 v1.2/v1.3
 
 Guide: https://wiki.geekworm.com/X728-Software
 
-## x728-v2.0
+## x728-v2.0.sh
 setup scripts for x728 v2.0 only
 
 ## User manual
@@ -35,8 +35,8 @@ But we hope that the script can be executed automatically when the Raspberry Pi 
 
 >`@reboot python /home/pi/x728bat.py`
 
-## uninstall x728 script
-run the following command:
+## uninstall_x728.sh
+uninsatll x728 shell script, run the following command:
 > sudo ./uninstall_x728.sh
 
 
