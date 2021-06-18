@@ -7,7 +7,7 @@ sudo sed -i '$ i #x728 Start power management on boot' /etc/rc.local
 #x728 Powering on /reboot /full shutdown through hardware
 #!/bin/bash
 
-sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
 
 echo '#!/bin/bash
 
@@ -76,7 +76,7 @@ echo "X728 Shutting down..."
 echo "0" > /sys/class/gpio/gpio$BUTTON/value
 ' > /usr/local/bin/x728softsd.sh
 sudo chmod +x /usr/local/bin/x728softsd.sh
-sudo echo "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
+sudo echo "alias x728off='sudo x728softsd.sh'" >> /home/pi/.bashrc
 
 #X728 Battery voltage & precentage reading
 #!/bin/bash
@@ -84,7 +84,7 @@ sudo echo "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
 #Get current PYTHON verson, 2 or 3
 PY_VERSION=`python -V 2>&1|awk '{print $2}'|awk -F '.' '{print $1}'`
 
-sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
 
 echo '#!/usr/bin/env python
 import struct
