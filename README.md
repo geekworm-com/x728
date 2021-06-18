@@ -1,4 +1,7 @@
 This shell script and python file is tested only on Raspberry pi OS..
+
+We refactored the script file of X728, hope it will be easier to use
+
 ## x728-v1.0.sh
 setup scripts for x728 v1.2/v1.3
 
@@ -14,8 +17,6 @@ Firstly please select your x728 version.
 > or
 
 >sudo bash x728-v2.0.sh
-
->printf "%s\n" "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
 
 >sudo reboot
 
@@ -39,5 +40,9 @@ But we hope that the script can be executed automatically when the Raspberry Pi 
 uninsatll x728 shell script, run the following command:
 > sudo ./uninstall_x728.sh
 
+For the x728 old shell script, you also run this command to remove it, then re-install the x728 script.
+
+## How to software turn off pi 4
+> x728off  # type this command will execute software shut down.
 
 
