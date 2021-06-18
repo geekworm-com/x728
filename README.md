@@ -35,4 +35,9 @@ But we hope that the script can be executed automatically when the Raspberry Pi 
 
 >`@reboot python /home/pi/x728bat.py`
 
+## uninstall x728 script
+run the following command:
+> sudo ./uninstall_x728.sh
+
+
 
