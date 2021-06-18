@@ -85,7 +85,7 @@ echo "X728 Shutting down..."
 echo "0" > /sys/class/gpio/gpio$BUTTON/value
 ' > /usr/local/bin/x728softsd.sh
 sudo chmod +x /usr/local/bin/x728softsd.sh
-echo "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
+sudo echo "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
 
 #X728 Battery voltage & precentage reading
 #!/bin/bash
