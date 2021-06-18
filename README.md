@@ -2,10 +2,10 @@ This shell script and python file is tested only on Raspberry pi OS..
 
 We refactored the script file of X728, hope it will be easier to use
 
+Guide: https://wiki.geekworm.com/X728-Software
+
 ## x728-v1.0.sh
 setup scripts for x728 v1.2/v1.3
-
-Guide: https://wiki.geekworm.com/X728-Software
 
 ## x728-v2.0.sh
 setup scripts for x728 v2.0 only
