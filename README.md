@@ -12,11 +12,11 @@ setup scripts for x728 v2.0 only
 
 ## User manual
 Firstly please select your x728 version.
->sudo bash x728-v1.0.sh
+>sudo bash x728-v2.0.sh
 
 > or
 
->sudo bash x728-v2.0.sh
+>sudo bash x728-v1.0.sh
 
 >sudo reboot
 
