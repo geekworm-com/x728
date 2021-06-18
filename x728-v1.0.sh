@@ -17,9 +17,9 @@ sudo sed -i '$ i #x728 Start power management on boot' /etc/rc.local
 #x728 Powering on /reboot /full shutdown through hardware
 #!/bin/bash
 
-#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
 
-sudo echo '#!/bin/bash
+echo '#!/bin/bash
 
 SHUTDOWN=5
 REBOOTPULSEMINIMUM=200
@@ -62,11 +62,11 @@ sudo sed -i '$ i /etc/x728pwr.sh &' /etc/rc.local
 #X728 full shutdown through Software
 #!/bin/bash
 
-#sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
+sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
 
-sudo echo '#!/bin/bash
+echo '#!/bin/bash
 
-BUTTON=26
+BUTTON=13
 
 echo "$BUTTON" > /sys/class/gpio/export;
 echo "out" > /sys/class/gpio/gpio$BUTTON/direction
@@ -82,7 +82,7 @@ fi
 echo "X728 Shutting down..."
 /bin/sleep $SLEEP
 
-#restore GPIO 26
+#restore GPIO 13
 echo "0" > /sys/class/gpio/gpio$BUTTON/value
 ' > /usr/local/bin/x728softsd.sh
 sudo chmod +x /usr/local/bin/x728softsd.sh
@@ -94,9 +94,9 @@ echo "alias x728off='sudo x728softsd.sh'" >> ~/.bashrc
 #Get current PYTHON verson, 2 or 3
 PY_VERSION=`python -V 2>&1|awk '{print $2}'|awk -F '.' '{print $1}'`
 
-#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
 
-sudo echo '#!/usr/bin/env python
+echo '#!/usr/bin/env python
 import struct
 import smbus
 import sys
@@ -179,9 +179,9 @@ sudo chmod +x /home/pi/x728bat.py
 #X728 AC Power loss / power adapter failture detection
 #!/bin/bash
 
-#sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
+sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
 
-sudo echo '#!/usr/bin/env python
+echo '#!/usr/bin/env python
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
