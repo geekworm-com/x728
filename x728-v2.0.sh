@@ -1,15 +1,20 @@
+#!/bin/bash
+#remove the old installtion
+sudo sed -i '/x728/d' /etc/rc.local
+sudo sed -i '/x728/d' /etc/modules
+
 #X728 RTC setting up
-sudo sed -i '$ i rtc-ds1307' /etc/modules
-sudo sed -i '$ i echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device' /etc/rc.local
-sudo sed -i '$ i hwclock -s' /etc/rc.local
-sudo sed -i '$ i #Start power management on boot' /etc/rc.local
+sudo sed -i '$ i rtc-ds1307  #x728' /etc/modules
+sudo sed -i '$ i echo ds1307 0x68 #x728> /sys/class/i2c-adapter/i2c-1/new_device' /etc/rc.local
+sudo sed -i '$ i hwclock -s #x728' /etc/rc.local
+sudo sed -i '$ i #x728 Start power management on boot' /etc/rc.local
 
 #x728 Powering on /reboot /full shutdown through hardware
 #!/bin/bash
 
-    sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
 
-    echo '#!/bin/bash
+sudo echo '#!/bin/bash
 
 SHUTDOWN=5
 REBOOTPULSEMINIMUM=200
@@ -27,7 +32,7 @@ while [ 1 ]; do
   shutdownSignal=$(cat /sys/class/gpio/gpio$SHUTDOWN/value)
   if [ $shutdownSignal = 0 ]; then
     /bin/sleep 0.2
-  else  
+  else
     pulseStart=$(date +%s%N | cut -b1-13)
     while [ $shutdownSignal = 1 ]; do
       /bin/sleep 0.02
@@ -38,7 +43,7 @@ while [ 1 ]; do
       fi
       shutdownSignal=$(cat /sys/class/gpio/gpio$SHUTDOWN/value)
     done
-    if [ $(($(date +%s%N | cut -b1-13)-$pulseStart)) -gt $REBOOTPULSEMINIMUM ]; then 
+    if [ $(($(date +%s%N | cut -b1-13)-$pulseStart)) -gt $REBOOTPULSEMINIMUM ]; then
       echo "X728 Rebooting", SHUTDOWN, ", recycling Rpi ..."
       sudo reboot
       exit
@@ -46,17 +51,17 @@ while [ 1 ]; do
   fi
 done' > /etc/x728pwr.sh
 sudo chmod +x /etc/x728pwr.sh
-sudo sed -i '$ i /etc/x728pwr.sh &' /etc/rc.local 
+sudo sed -i '$ i /etc/x728pwr.sh &' /etc/rc.local
 
 
 #X728 full shutdown through Software
 #!/bin/bash
 
-    sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
+#sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
 
-    echo '#!/bin/bash
+sudo echo '#!/bin/bash
 
-BUTTON=13
+BUTTON=26
 
 echo "$BUTTON" > /sys/class/gpio/export;
 echo "out" > /sys/class/gpio/gpio$BUTTON/direction
@@ -72,7 +77,7 @@ fi
 echo "X728 Shutting down..."
 /bin/sleep $SLEEP
 
-#restore GPIO 13
+#restore GPIO 26
 echo "0" > /sys/class/gpio/gpio$BUTTON/value
 ' > /usr/local/bin/x728softsd.sh
 sudo chmod +x /usr/local/bin/x728softsd.sh
@@ -80,61 +85,97 @@ sudo chmod +x /usr/local/bin/x728softsd.sh
 #X728 Battery voltage & precentage reading
 #!/bin/bash
 
-    sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+#Get current PYTHON verson, 2 or 3
+PY_VERSION=`python -V 2>&1|awk '{print $2}'|awk -F '.' '{print $1}'`
 
-    echo '#!/usr/bin/env python
+#sudo sed -e '/shutdown/ s/^#*/#/' -i /etc/rc.local
+
+sudo echo '#!/usr/bin/env python
 import struct
 import smbus
 import sys
 import time
+import RPi.GPIO as GPIO
 
+# Global settings
+# GPIO is 26 for x728 v2.0, GPIO is 13 for X728 v1.2/v1.3
+GPIO_PORT 	= 26
+I2C_ADDR    = 0x36
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GPIO_PORT, GPIO.OUT)
+GPIO.setwarnings(False)
 
 def readVoltage(bus):
 
-     address = 0x36
+     address = I2C_ADDR
      read = bus.read_word_data(address, 2)
      swapped = struct.unpack("<H", struct.pack(">H", read))[0]
      voltage = swapped * 1.25 /1000/16
      return voltage
 
-
 def readCapacity(bus):
 
-     address = 0x36
+     address = I2C_ADDR
      read = bus.read_word_data(address, 4)
      swapped = struct.unpack("<H", struct.pack(">H", read))[0]
      capacity = swapped/256
      return capacity
 
-
 bus = smbus.SMBus(1) # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
-
+'> /home/pi/x728bat.py
+if [ $PY_VERSION == 3 ]; then
+    echo '
 while True:
-
- print "******************"
- print "Voltage:%5.2fV" % readVoltage(bus)
-
- print "Battery:%5i%%" % readCapacity(bus)
+ print ("******************")
+ print ("Voltage:%5.2fV" % readVoltage(bus))
+ print ("Battery:%5i%%" % readCapacity(bus))
 
  if readCapacity(bus) == 100:
-
-         print "Battery FULL"
-
+        print ("Battery FULL")
  if readCapacity(bus) < 20:
+        print ("Battery Low")
 
+#Set battery low voltage to shut down, you can modify the 3.00 to other value
+ if readVoltage(bus) < 3.00:
+                print ("Battery LOW!!!")
+                print ("Shutdown in 10 seconds")
+                time.sleep(10)
+                GPIO.output(GPIO_PORT, GPIO.HIGH)
+                time.sleep(3)
+                GPIO.output(GPIO_PORT, GPIO.LOW)
 
-         print "Battery LOW"
- print "******************"
  time.sleep(2)
-' > /home/pi/x728bat_v1.2.py
-sudo chmod +x /home/pi/x728bat_v1.2.py
+' >> /home/pi/x728bat.py
+elif [ $PY_VERSION == 2 ]; then
+    echo '
+while True:
+ print "******************"
+ print "Voltage:%5.2fV" % readVoltage(bus)
+ print "Battery:%5i%%" % readCapacity(bus)
+ if readCapacity(bus) == 100:
+         print "Battery FULL"
+ if readCapacity(bus) < 20:
+         print "Battery Low"
+#Set battery low voltage to shut down, you can modify the 3.00 to other value
+ if readVoltage(bus) < 3.00:
+         print "Battery LOW!!!"
+         print "Shutdown in 10 seconds"
+         time.sleep(10)
+         GPIO.output(GPIO_PORT, GPIO.HIGH)
+         time.sleep(3)
+         GPIO.output(GPIO_PORT, GPIO.LOW)
+ time.sleep(2)
+' >> /home/pi/x728bat.py
+fi
+sudo chmod +x /home/pi/x728bat.py
 
 #X728 AC Power loss / power adapter failture detection
 #!/bin/bash
 
-    sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
+#sudo sed -e '/button/ s/^#*/#/' -i /etc/rc.local
 
-    echo '#!/usr/bin/env python
+sudo echo '#!/usr/bin/env python
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
