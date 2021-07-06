@@ -61,19 +61,20 @@ You can get the following python file in /home/pi/ fold:
 - x728pld.py # Testing AC power off/loss or power adapter failure detection
 
 > How to reading battery voltage and percentage, this is the sample code, you can modify it by your request.
+```
  python /home/pi/x728bat.py &
-
+```
 Or use another method:
 But we hope that the script can be executed automatically when the Raspberry Pi board boots, we can use crontab system command to achieve it. please refer to the following:
-
->pi@raspberrypi ~ $  `sudo crontab -e`
-
+```
+pi@raspberrypi ~ $  `sudo crontab -e`
+```
  Choose "`1`" then press Enter
 
  Add a line at the end of the file that reads like this:
-
->`@reboot python /home/pi/x728bat.py`
-
+```
+`@reboot python /home/pi/x728bat.py`
+```
 > Testing AC power off/loss or power adapter failure detection (need to short the 'PLD' pin)
 ```
 sudo python x728pld.py
