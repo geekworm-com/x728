@@ -120,7 +120,7 @@ def readCapacity(bus):
 
 bus = smbus.SMBus(1) # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 '> /home/pi/x728bat.py
-if [ $PY_VERSION == 3 ]; then
+if [ $PY_VERSION -eq 3 ]; then
     echo '
 while True:
  print ("******************")
@@ -143,7 +143,7 @@ while True:
 
  time.sleep(2)
 ' >> /home/pi/x728bat.py
-elif [ $PY_VERSION == 2 ]; then
+elif [ $PY_VERSION -eq 2 ]; then
     echo '
 while True:
  print "******************"
