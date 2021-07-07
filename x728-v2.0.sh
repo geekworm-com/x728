@@ -143,7 +143,7 @@ while True:
 
  time.sleep(2)
 ' >> /home/pi/x728bat.py
-elif [ $PY_VERSION -eq 2 ]; then
+else
     echo '
 while True:
  print "******************"
