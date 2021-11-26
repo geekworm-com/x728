@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # We want to automatically shut down when the battery voltage is lower than a certain specified value, is it possible?
-# Please run the 'python3 x728v2-asd.py &' to get this function
+# Please run the 'python3 /home/pi/x728/x728v2-asd.py &' to get this function
 
 import struct
 import smbus
