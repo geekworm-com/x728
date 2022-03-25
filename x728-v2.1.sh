@@ -91,7 +91,7 @@ import time
 import RPi.GPIO as GPIO
 
 # Global settings
-# GPIO is 26 for x728 v2.0, GPIO is 13 for X728 v1.2/v1.3
+# GPIO is 26 for x728 v2.0 v2.1 v2.2, GPIO is 13 for X728 v1.2/v1.3
 GPIO_PORT 	= 26
 I2C_ADDR    = 0x36
 
