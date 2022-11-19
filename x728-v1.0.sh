@@ -193,4 +193,3 @@ print "4.When power adapter disconnected, you will see: AC Power OK, Power Adapt
 raw_input("Testing Started")
 ' > /home/pi/x728pld.py
 sudo chmod +x /home/pi/x728pld.py
-
