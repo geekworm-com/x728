@@ -158,13 +158,13 @@ while True:
     if i == 0:
         print("AC Power OK")
         GPIO.output(BUZZER_PIN, 0)
-    elif i == 1:
-        print("Power Supply A/C Lost")
-        GPIO.output(BUZZER_PIN, 1)
-        time.sleep(0.1)
-        GPIO.output(BUZZER_PIN, 0)
-        time.sleep(0.1)
-
+    # You can remove the following comment lines (remove the # character) if you want buzzer sounds alarm.
+    #elif i == 1:
+        #print("Power Supply A/C Lost")
+        #GPIO.output(BUZZER_PIN, 1)
+        #time.sleep(0.1)
+        #GPIO.output(BUZZER_PIN, 0)
+        #time.sleep(0.1)
     time.sleep(1)
 ' > /home/pi/x728pld.py
 #sudo chmod +x /home/pi/x728pld.py
