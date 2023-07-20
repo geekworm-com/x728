@@ -115,11 +115,19 @@ def readCapacity(bus):
      capacity = swapped/256
      return capacity
 
+def readCurrent(bus):
+
+     address = I2C_ADDR
+     read = bus.read_word_data(address, 20)
+     swapped_as_signed = struct.unpack("<h", struct.pack(">H", read))[0]
+     return swapped_as_signed
+
 bus = smbus.SMBus(1) # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
 while True:
  print ("******************")
  print ("Voltage:%5.2fV" % readVoltage(bus))
+ print ("Current:%5dmA" % readCurrent(bus))
  print ("Battery:%5i%%" % readCapacity(bus))
 
  if readCapacity(bus) == 100:
@@ -137,10 +145,10 @@ while True:
         GPIO.output(GPIO_PORT, GPIO.LOW)
 
  time.sleep(2)
-' >> /home/pi/x728bat.py
+' > /home/pi/x728bat.py
 #sudo chmod +x /home/pi/x728bat.py
 
-#X728 AC Power loss / power adapter failture detection
+#X728 AC Power loss / power adapter failure detection
 #!/bin/bash
 echo '#!/usr/bin/env python
 import RPi.GPIO as GPIO
